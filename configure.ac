@@ -1722,6 +1722,27 @@ if test "$extrawarnings" = true || test "$extrawarnings" = error; then
   fi
 fi
 
+AC_ARG_ENABLE([fbounds-safety],
+  [AS_HELP_STRING([--enable-fbounds-safety],
+    [enable experimental Clang -fbounds-safety annotations (OFF by default)]
+  )],
+  [
+    case "${enableval}" in
+    yes) fbounds_safety=true ;;
+    no) fbounds_safety=false ;;
+    *) AC_MSG_ERROR([bad value ${enableval} for --enable-fbounds-safety]) ;;
+    esac
+  ],
+  [fbounds_safety=false]
+)
+
+if test "$fbounds_safety" = true; then
+  AC_MSG_NOTICE([ENABLE_FBOUNDS_SAFETY enabled])
+  AS_VAR_APPEND([CFLAGS], [" -DLI_SUPPORT_FBOUNDS_SAFETY -fbounds-safety"])
+else
+  AC_MSG_NOTICE([ENABLE_FBOUNDS_SAFETY disabled])
+fi
+
 dnl build version-id
 LIGHTTPD_VERSION_ID=m4_format([0x%x%02x%02x], m4_unquote(m4_split(AC_PACKAGE_VERSION, [\.])))
 AC_DEFINE_UNQUOTED([LIGHTTPD_VERSION_ID], [$LIGHTTPD_VERSION_ID], [lighttpd-version-id])

@@ -660,6 +660,12 @@ common_cflags = defs + [
 	'-DHAVE_CONFIG_H',
 ]
 
+# Optional -fbounds-safety (inert macros unless enable_fbounds_safety)
+if get_option('enable_fbounds_safety')
+	common_cflags += ['-DLI_SUPPORT_FBOUNDS_SAFETY', '-fbounds-safety']
+	message('enable_fbounds_safety enabled')
+endif
+
 if compiler.get_id() == 'gcc' or compiler.get_id() == 'clang'
 	common_cflags += [
 		'-pipe',

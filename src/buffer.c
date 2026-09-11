@@ -57,6 +57,7 @@ static char* buffer_realloc(buffer * const restrict b, const size_t len) {
     }
     sz |= 1; /*(extra +1 for '\0' when needed buffer size is exact power-2)*/
 
+    /* Capacity before pointer so sized_by invariants hold under -fbounds-safety. */
     b->size = sz;
     b->ptr = realloc(b->ptr, sz);
 

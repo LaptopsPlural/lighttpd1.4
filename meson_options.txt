@@ -177,3 +177,10 @@ option('lua_version',
 	type: 'string',
 	description: 'Look for a specific lua version',
 )
+
+option('enable_fbounds_safety',
+	type: 'boolean',
+	value: false,
+	description: 'Enable experimental Clang -fbounds-safety annotations (OFF by default)',
+)
+

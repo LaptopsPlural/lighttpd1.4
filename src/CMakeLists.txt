@@ -47,6 +47,19 @@ option(WITH_MAXMINDDB "with MaxMind GeoIP2-support mod_maxminddb [default: off]"
 option(WITH_SASL "with SASL-support for mod_authn_sasl [default: off]")
 option(WITH_XXHASH "with system-provided xxhash [default: off]")
 
+
+# Optional Clang -fbounds-safety. Default OFF: LI_*SIZED_BY* / LI_*COUNTED_BY*
+# macros in buffer_bounds_safety.h are inert and the ABI/build is unchanged.
+# When ON, requires a Clang that provides -fbounds-safety / <ptrcheck.h>.
+option(ENABLE_FBOUNDS_SAFETY "Enable experimental Clang -fbounds-safety annotations (OFF by default)" OFF)
+if(ENABLE_FBOUNDS_SAFETY)
+	message(STATUS "ENABLE_FBOUNDS_SAFETY enabled")
+	add_definitions(-DLI_SUPPORT_FBOUNDS_SAFETY)
+	add_compile_options(-fbounds-safety)
+else()
+	message(STATUS "ENABLE_FBOUNDS_SAFETY disabled")
+endif()
+
 if(CMAKE_C_COMPILER_ID MATCHES "GNU" OR CMAKE_C_COMPILER_ID MATCHES "Clang")
 	option(BUILD_EXTRA_WARNINGS "extra warnings")
 	option(BUILD_SANITIZE_ADDRESS "Enable address sanitizer" OFF)

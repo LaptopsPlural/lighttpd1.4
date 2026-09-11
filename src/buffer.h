@@ -1,6 +1,7 @@
 #ifndef _BUFFER_H_
 #define _BUFFER_H_
 #include "first.h"
+#include "buffer_bounds_safety.h" /* optional -fbounds-safety macros */
 
 struct tm;              /* declaration */
 
@@ -20,7 +21,12 @@ struct tm;              /* declaration */
  * (i.e. never leave it in the special empty state)
  */
 typedef struct {
-	char *ptr;
+	/* size is the capacity companion for ptr (bytes allocated at *ptr).
+	 * Field order is preserved (pointer before size); update sites assign
+	 * capacity before the pointer so sized-by invariants hold under
+	 * optional -fbounds-safety builds. ptr may be NULL in the empty state.
+	 */
+	char *LI_SIZED_BY_OR_NULL(size) ptr;
 
 	/* "used" includes a terminating 0 */
 	uint32_t used;

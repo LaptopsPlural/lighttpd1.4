@@ -350,7 +350,7 @@ mod_wstunnel_la_LIBADD = $(common_libadd) $(CRYPTO_LIB)
 endif # !LIGHTTPD_STATIC
 
 
-hdr = base64.h buffer.h burl.h network.h log.h http_kv.h keyvalue.h \
+hdr = base64.h buffer.h buffer_bounds_safety.h burl.h network.h log.h http_kv.h keyvalue.h \
 	response.h request.h reqpool.h chunk.h h1.h h2.h \
 	first.h http_chunk.h \
 	algo_hmac.h \
